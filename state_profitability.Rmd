@@ -1,0 +1,47 @@
+---
+title: "State Profitability"
+author: "Hadrien@rstudio.com"
+date: "9/27/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Generate dummy data 
+For reproducibility purposes, we will use the `simulationmachine` package to create simulated claims data.
+
+```{r create-dummy-data}
+
+# set seed for reproducibility
+set.seed(1248)
+
+# install package from github
+# remotes::install_github("kasaai/simulationmachine")
+
+# load package
+library(simulationmachine)
+
+# specify the parameters of a simulation
+charm <- simulation_machine(
+  num_claims = 50000, 
+  lob_distribution = c(0.25, 0.25, 0.30, 0.20), 
+  inflation = c(0.01, 0.01, 0.01, 0.01), 
+  sd_claim = 0.85, 
+  sd_recovery = 0.75
+)
+
+charm
+
+# perform the simulation.
+library(dplyr)
+records <- conjure(charm, seed = 100)
+glimpse(records)
+
+# randomly assign states to each record
+library(experiment)
+dat <- randomize(records, group = c("MA", "CO"))
+records <- cbind(dat$data, state = dat$treatment)
+```
+
