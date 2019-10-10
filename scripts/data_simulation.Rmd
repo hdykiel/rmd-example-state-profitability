@@ -1,7 +1,7 @@
 ---
-title: "State Profitability"
+title: "Data Simulation"
 author: "Hadrien@rstudio.com"
-date: "9/27/2019"
+date: "10/10/2019"
 output: html_document
 ---
 
@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Generate dummy data 
+## Generate dummy data with simulation machine
 For reproducibility purposes, we will use the `simulationmachine` package to create simulated claims data.
 
 ```{r create-dummy-data}
@@ -43,5 +43,22 @@ glimpse(records)
 library(experiment)
 dat <- randomize(records, group = c("MA", "CO"))
 records <- cbind(dat$data, state = dat$treatment)
+```
+
+## Simulate policy data
+
+```{r}
+library(tidyverse)
+set.seed(124)
+n <- length(state.abb)
+
+dat <- tibble(
+  state = state.abb,
+  loss_ratio = rnorm(n = n, mean = 0.5, sd = 0.1)
+)
+
+# export data set to csv
+write.csv(dat, "../outputs/data.csv", row.names = FALSE)
+
 ```
 
