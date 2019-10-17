@@ -1,0 +1,19 @@
+---
+title: "State Economics Report"
+author: "Hadrien@rstudio.com"
+date: "10/17/2019"
+output: html_document
+---
+
+## Overview 
+
+This report template was designed for DSOs to explore the economics of policies in their respective states. It provides metrics and insights to help understand the performance and profitability of each state. It was created in R using the `rmarkdown` package. Rather than creating 50 individual reports for each state, a single paramaterized report template was created which allows the user to update the input parameter used in this report, `state`, to view the report for that particular state. Parameterized rmarkdown reports are a great way to create a single report which can easily and quickly be re-run based on different input assumptions without needing to make any changes to the source code itself.
+
+## Using this report 
+
+[Insert information here on how to run this report]
+
+## Key Indicators
+
+[LR,Severity, Frequency]
+

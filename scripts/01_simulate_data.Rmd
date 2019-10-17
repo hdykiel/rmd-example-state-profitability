@@ -50,15 +50,32 @@ records <- cbind(dat$data, state = dat$treatment)
 ```{r}
 library(tidyverse)
 set.seed(124)
-n <- length(state.abb)
+n <- length(state.name)
 
+# Loss Ratio
 dat <- tibble(
-  state = state.abb,
+  state = state.name,
   loss_ratio = rnorm(n = n, mean = 0.5, sd = 0.1)
 )
 
+# convert state name to lowercase
+dat$state <- tolower(dat$state)
+
 # export data set to csv
 write.csv(dat, "../outputs/data.csv", row.names = FALSE)
+
+# Frequency Severity
+set.seed(20)
+
+
+dat_freq_sev <- tibble(
+  # 10 records per state
+  state = rep(state.abb,10),
+  year = rep(2010:2019, each = 50),
+  frequency = rnorm(500, mean = 0.14, sd = 0.03)
+)
+
+qplot(dat_freq_sev$frequency)
 
 ```
 
