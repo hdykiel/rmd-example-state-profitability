@@ -52,7 +52,6 @@ library(tidyverse)
 set.seed(124)
 n <- length(state.name)
 
-# Loss Ratio
 dat <- tibble(
   state = state.name,
   loss_ratio = rnorm(n = n, mean = 0.5, sd = 0.1)
@@ -63,25 +62,6 @@ dat$state <- tolower(dat$state)
 
 # export data set to csv
 write.csv(dat, "../outputs/data.csv", row.names = FALSE)
-
-# Frequency Severity
-set.seed(20) # set seed for reproducibility
-
-# create data set
-dat_freq_sev <- tibble(
-  # 10 records per state
-  state = rep(state.abb,10),
-  year = rep(2010:2019, each = 50),
-  frequency = rnorm(500, mean = 0.14, sd = 0.03),
-  avg_severity = rnorm(500, mean = 2750, sd = 900)
-)
-
-
-# plot distribution
-qplot(dat_freq_sev$frequency)
-
-# export to csv
-write.csv(dat_freq_sev, "../outputs/freq_sev.csv", row.names = FALSE)
 
 ```
 
