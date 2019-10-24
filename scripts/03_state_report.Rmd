@@ -2,7 +2,9 @@
 title: "State Economics Report"
 author: "Hadrien@rstudio.com"
 date: "10/17/2019"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 params:
   state: CO
 ---
@@ -35,9 +37,12 @@ This report was designed to be accessed by all users, and as such non R users ha
 
 ## Key Indicators
 
-[LR,Severity, Frequency]
+[LR,Paid Severity, Frequency]
+https://www.casact.org/library/studynotes/werner_modlin_ratemaking.pdf
+
 
 ```{r frequency-plot}
+# frequency plot
 dat_freq_sev %>%
   filter(state %in% c(params$state)) %>%
   ggplot(aes(year, frequency)) + 
@@ -46,4 +51,13 @@ dat_freq_sev %>%
 
 ```
 
+
+```{r severity-plot}
+# severity plot
+dat_freq_sev %>%
+  filter(state %in% c(params$state)) %>%
+  ggplot(aes(year, avg_severity)) + 
+  geom_point() + geom_smooth() + 
+  ggtitle(label = paste("Avg Severity:", params$state))
+```
 
