@@ -3,10 +3,10 @@ title: "State Economics Report"
 author: "Hadrien@rstudio.com"
 date: "10/17/2019"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 params:
-  state: CO
+  state: MA
 ---
 
 ```{r setup, include=FALSE}
@@ -36,9 +36,6 @@ _Non R Users_
 This report was designed to be accessed by all users, and as such non R users have numerous ways to view and interact with the report. Firstly, the R user(s) responsible for generating the report can share the PDF, Word, or HTML output of the report via email or on a shared file serveer. Alternatively, the report owner may wish to publish the report to a hosting platform such as [RStudio Connect](https://rstudio.com/products/connect/) where it can be accessed by whoever was granted access permission via any web browser. One advantage of accessing and vieweing this report via RStudio Connect is the ability for viewers to update the input parameters themselves. This allows users to rerender the report for different sets of core assumptions via the RStudio Connect graphical user interface without any coding required.
 
 ## Key Indicators
-
-[LR,Paid Severity, Frequency]
-https://www.casact.org/library/studynotes/werner_modlin_ratemaking.pdf
 
 
 ```{r frequency-plot}

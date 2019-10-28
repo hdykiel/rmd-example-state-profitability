@@ -7,61 +7,31 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(tidyverse)
 ```
 
-## Generate dummy data with simulation machine
-For reproducibility purposes, we will use the `simulationmachine` package to create simulated claims data.
-
-```{r create-dummy-data}
-
-# set seed for reproducibility
-set.seed(1248)
-
-# install package from github
-# remotes::install_github("kasaai/simulationmachine")
-
-# load package
-library(simulationmachine)
-
-# specify the parameters of a simulation
-charm <- simulation_machine(
-  num_claims = 50000, 
-  lob_distribution = c(0.25, 0.25, 0.30, 0.20), 
-  inflation = c(0.01, 0.01, 0.01, 0.01), 
-  sd_claim = 0.85, 
-  sd_recovery = 0.75
-)
-
-charm
-
-# perform the simulation.
-library(dplyr)
-records <- conjure(charm, seed = 100)
-glimpse(records)
-
-# randomly assign states to each record
-library(experiment)
-dat <- randomize(records, group = c("MA", "CO"))
-records <- cbind(dat$data, state = dat$treatment)
-```
+This scripts simulates fake data such as loss ratio, frequency, and severity for each U.S. state. For simplicity, we assume each metric is represented by a normal distribution.
 
 ## Simulate policy data
 
 ```{r}
-library(tidyverse)
+# set seed for reproducibility
 set.seed(124)
+
+# number of states
 n <- length(state.name)
 
-# Loss Ratio
+# simulate loss ratio
 dat <- tibble(
   state = state.name,
+  # normal distribution
   loss_ratio = rnorm(n = n, mean = 0.5, sd = 0.1)
 )
 
 # convert state name to lowercase
 dat$state <- tolower(dat$state)
 
-# export data set to csv
+# export loss ratio data set to csv
 write.csv(dat, "../outputs/data.csv", row.names = FALSE)
 
 # Frequency Severity
@@ -72,15 +42,15 @@ dat_freq_sev <- tibble(
   # 10 records per state
   state = rep(state.abb,10),
   year = rep(2010:2019, each = 50),
+  # normal distribution
   frequency = rnorm(500, mean = 0.14, sd = 0.03),
   avg_severity = rnorm(500, mean = 2750, sd = 900)
 )
 
-
 # plot distribution
 qplot(dat_freq_sev$frequency)
 
-# export to csv
+# export frequence severity data to csv
 write.csv(dat_freq_sev, "../outputs/freq_sev.csv", row.names = FALSE)
 
 ```

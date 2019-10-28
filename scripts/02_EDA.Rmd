@@ -10,12 +10,15 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
 library(tidyverse)
 ```
 
+In this script we performed some preliminary exploratory data analysis to better understand the data. Unlike `01_simulate_data.Rmd`, this script does not need to be executed in order to generate the final state profitibility report. It may, however, be useful in answering questions which arise from the report.
+
+We first began by generating a few different choropleth maps of the US showing loss ratio. We used the code provided on the webpage ttps://socviz.co/maps.html as a starting point.
+
 ```{r data-prep}
 # load policy data
 dat <- read_csv("../outputs/data.csv")
 
 # load map data
-# source: https://socviz.co/maps.html
 library(maps)
 us_states <- map_data("state")
 head(us_states)
