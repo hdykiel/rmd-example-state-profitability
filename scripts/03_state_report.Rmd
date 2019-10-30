@@ -6,7 +6,7 @@ output:
   pdf_document: default
   html_document: default
 params:
-  state: MA
+  state: CO
 ---
 
 ```{r setup, include=FALSE}
